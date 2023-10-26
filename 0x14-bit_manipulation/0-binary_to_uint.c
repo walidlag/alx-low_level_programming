@@ -1,11 +1,10 @@
 #include "main.h"
 
 /**
- * binary_to_uint - CONverts Binary Number to AN
- * unsigned int.
+ * binary_to_uint - converts binary number to an unsigned int.
  * @b: binary.
  *
- * Return: unsigned int.
+ * Return: unsigned int or 0 if there's an invalid character or NULL string.
  */
 unsigned int binary_to_uint(const char *b)
 {
@@ -16,14 +15,19 @@ unsigned int binary_to_uint(const char *b)
 
     for (int i = 0; b[i] != '\0'; i++)
     {
-        result <<= 1;
-
-        if (b[i] == '1')
-            result |= 1;
-        else if (b[i] != '0')
-            return 0;
+        if (b[i] == '0')
+        {
+            result <<= 1;
+        }
+        else if (b[i] == '1')
+        {
+            result = (result << 1) | 1;
+        }
+        else
+        {
+            return 0; // Invalid character in the string
+        }
     }
 
     return result;
 }
-
