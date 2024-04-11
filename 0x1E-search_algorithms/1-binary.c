@@ -10,17 +10,9 @@
  * Return: The index where value is located, or -1 if value
  *         is not present in array or if array is NULL.
  */
-void print_array(int *array, int l, int r)
+int binary_search(int *array, size_t size, int value)
 {
-	int i;
-
-	for (i = l; i <= r; i++)
-	{
-		printf("%d", array[i]);
-		if (i < r)
-			printf(", ");
-	}
-	printf("\n");
+        return (binary_search_index(array, 0, size - 1, value));
 }
 
 /**
@@ -33,26 +25,28 @@ void print_array(int *array, int l, int r)
  * Return: The index where value is located, or -1 if value
  *         is not present in array.
  */
-int binary_search(int *array, size_t size, int value)
+int binary_search_index(int *array, size_t l, size_t r, int value)
 {
-	int l = 0, r = size - 1, m;
+    size_t i;
+    if (array == NULL)
+        return (-1);
+    for (; r >= l;)
+    {
+            printf("Searching in array: ");
+        for (i = l; i < r; i++)
+            printf("%d, ", array[i]);
+        printf("%d\n", array[i]);
+        i = l + (r - l) / 2;
 
-	if (!array || size == 0)
-		return (-1);
+        /* If the value is found at the midpoint, return its index */
+        if (array[i] == value)
+            return (i);
+        if (array[i] > value)
+            r = i - 1;
+        else
+            l = i + 1;
+    }
 
-	while (l <= r)
-	{
-		printf("Searching in array: ");
-		print_array(array, l, r);
-		m = l + (r - l) / 2;
-
-		if (array[m] > value)
-			r = m - 1;
-		else if (array[m] < value)
-			l = m + 1;
-		else
-			return (m);
-	}
-
-	return (-1);
+    /* If the value is not found, return -1 */
+    return (-1);
 }
